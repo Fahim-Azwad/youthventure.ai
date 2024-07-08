@@ -63,6 +63,17 @@ def main():
             font-size: 16px;
             line-height: 1.6;
         }
+        .example-prompts {
+            font-size: 14px;
+            color: #B0B0B0;
+            margin-bottom: 5px;
+        }
+
+        .example-prompts p {
+            margin-bottom: 5px;
+            margin-left: 15px;
+            margin-right: 5px;
+        }
         .stTextInput>div>div>input {
             color: #E0E0E0 !important;
             background-color: #2C2C2C;
@@ -122,7 +133,7 @@ def main():
             z-index: 1000;
             padding-top: 50px;
             border-bottom: 1px solid #3D3D3D;
-}
+        }
         #input-wrapper {
             flex-grow: 1;
             margin-right: 10px;
@@ -150,7 +161,13 @@ def main():
         """
         <div class="fixed-header">
             <h1 class='stHeader'>AI VC: Connecting Founders and Investors</h1>
+            <div class="example-prompts">
+                <p>Example for Founder: "Hi, I'm Azwad. I'm building an AI VC platform and I'm looking for potential investors with experience in AI, fintech, or venture capital technologies?"</p>
+                <p>Example for Investors: "Hi, I am Mahin and I am looking to invest in space exploration for $1000. Find me companies to invest in."</p>
+            </div>
         </div>
+
+
         """,
         unsafe_allow_html=True,
     )
