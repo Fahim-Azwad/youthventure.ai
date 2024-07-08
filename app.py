@@ -94,22 +94,19 @@ def main():
             font-size: 32px;
             font-weight: bold;
             text-align: center;
-            margin-bottom: 30px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
         .chat-container {
             display: flex;
             flex-direction: column-reverse;
-            height: calc(100vh - 300px);
             overflow-y: auto;
-            padding-bottom: 100px;
+            
         }
         .input-container {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 20px;
             background-color: #1E1E1E;
             border-top: 1px solid #3D3D3D;
             display: flex;
@@ -123,15 +120,15 @@ def main():
             right: 0;
             background-color: #1E1E1E;
             z-index: 1000;
-            padding: 20px;
+            padding-top: 50px;
             border-bottom: 1px solid #3D3D3D;
-        }
+}
         #input-wrapper {
             flex-grow: 1;
             margin-right: 10px;
         }
         .stButton>button {
-            height: 100%;
+            /*height: 100%;*/
             white-space: nowrap;
         }
         .css-zy9gvu {
@@ -159,7 +156,7 @@ def main():
     )
 
     # Add some padding to account for the fixed header
-    st.markdown("<div style='height: 100px;'></div>", unsafe_allow_html=True)
+    # st.markdown("<div style='height: 140px;'></div>", unsafe_allow_html=True)
 
     # Chat container
     chat_container = st.container()
