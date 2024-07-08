@@ -56,6 +56,7 @@ def main():
             border-radius: 10px;
             padding: 15px;
             margin-bottom: 15px;
+            margin-top: 30px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         .chat-message p {
