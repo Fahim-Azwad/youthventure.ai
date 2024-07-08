@@ -3,6 +3,8 @@ import streamlit as st
 from dotenv import load_dotenv
 import google.generativeai as genai
 from template import template
+from pymongo import MongoClient
+from datetime import datetime
 
 # Load environment variables
 load_dotenv()
@@ -18,6 +20,24 @@ st.set_page_config(
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel("gemini-1.5-flash")
+
+# MongoDB setup
+MONGO_URI = os.getenv("MONGO_URI")
+client = MongoClient(MONGO_URI)
+db = client["ai_vc_platform"]
+conversations = db["conversations"]
+
+
+# Save convo in mongo db
+def save_conversation(user_type, prompt, response):
+    conversation_data = {
+        "timestamp": datetime.utcnow(),
+        "user_type": user_type,
+        "prompt": prompt,
+        "response": response,
+    }
+    conversations.insert_one(conversation_data)
+
 
 # Initialize chat session in Streamlit if not already present
 if "chat_session" not in st.session_state:
@@ -38,6 +58,15 @@ def generate_response(query):
     formatted_history.append({"role": "user", "parts": [{"text": prompt}]})
 
     response = model.generate_content(formatted_history)
+
+    # Determine user type and save conversation
+    user_type = (
+        "founder"
+        if "I'm building" in query or "I'm developing" in query
+        else "investor"
+    )
+    save_conversation(user_type, query, response.text)
+
     return response.text
 
 
