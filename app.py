@@ -23,20 +23,31 @@ model = genai.GenerativeModel("gemini-1.5-flash")
 
 # MongoDB setup
 MONGO_URI = os.getenv("MONGO_URI")
-client = MongoClient(MONGO_URI)
-db = client["ai_vc_platform"]
-conversations = db["conversations"]
+try:
+    client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
+    client.server_info()  # This will raise an exception if the connection fails
+    db = client["ai_vc_platform"]
+    conversations = db["conversations"]
+    print("MongoDB connection successful")
+except Exception as e:
+    print(f"MongoDB connection failed: {e}")
+    conversations = None
 
 
 # Save convo in mongo db
 def save_conversation(user_type, prompt, response):
-    conversation_data = {
-        "timestamp": datetime.utcnow(),
-        "user_type": user_type,
-        "prompt": prompt,
-        "response": response,
-    }
-    conversations.insert_one(conversation_data)
+    if conversations:
+        try:
+            conversation_data = {
+                "timestamp": datetime.utcnow(),
+                "user_type": user_type,
+                "prompt": prompt,
+                "response": response,
+            }
+            conversations.insert_one(conversation_data)
+            print("Conversation saved successfully")
+        except Exception as e:
+            print(f"Failed to save conversation: {e}")
 
 
 # Initialize chat session in Streamlit if not already present
