@@ -110,7 +110,7 @@ def main():
         }
         .chat-container {
             display: flex;
-            flex-direction: column-reverse;
+            flex-direction: column;
             overflow-y: auto;
             
         }
@@ -179,10 +179,10 @@ def main():
     # Chat container
     chat_container = st.container()
 
-    # Display chat history in reverse order
+    # Display chat history in correct order
     with chat_container:
         st.markdown('<div class="chat-container">', unsafe_allow_html=True)
-        for message in reversed(st.session_state.chat_session.history):
+        for message in st.session_state.chat_session.history:
             role = "assistant" if message["role"] == "model" else "user"
             with st.chat_message(role):
                 st.markdown(
