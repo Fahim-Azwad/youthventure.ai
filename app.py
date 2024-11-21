@@ -216,7 +216,7 @@ def main():
         st.session_state.chat_session.history.append(
             {"role": "model", "content": response}
         )
-        st.experimental_rerun()
+        st.rerun()
 
     # JavaScript to move the input to the correct position
     st.markdown(
